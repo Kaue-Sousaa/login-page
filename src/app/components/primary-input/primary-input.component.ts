@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskDirective } from 'ngx-mask';
 
 type InputTypes = "text" | "email" | "password"
 
@@ -7,7 +8,8 @@ type InputTypes = "text" | "email" | "password"
   selector: 'app-primary-input',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaskDirective
   ],
   providers: [
     {
@@ -25,6 +27,7 @@ export class PrimaryInputComponent implements ControlValueAccessor{
   @Input() placeholder: string = "";
   @Input() label: string = "";
   @Input() inputName: string = "";
+  @Input() mask: string = "";
 
   value: string = ''
   onChange: any = () => {}

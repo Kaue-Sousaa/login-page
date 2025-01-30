@@ -5,12 +5,14 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import {provideAnimations} from '@angular/platform-browser/animations';
+import { provideNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
     provideToastr(),
+    provideNgxMask(),
     provideHttpClient(withFetch())
   ]
 };

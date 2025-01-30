@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { DefaultLoginLayoutComponent } from '../../components/default-login-layout/default-login-layout.component';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 interface SignupForm {
   name: FormControl
   email: FormControl,
+  cpf: FormControl,
   password: FormControl,
   passwordConfirm: FormControl
 }
@@ -19,10 +21,12 @@ interface SignupForm {
   imports: [
     DefaultLoginLayoutComponent,
     ReactiveFormsModule,
-    PrimaryInputComponent
+    PrimaryInputComponent,
+    NgxMaskDirective
   ],
   providers: [
-    LoginService
+    LoginService,
+    provideNgxMask()
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
@@ -38,6 +42,7 @@ export class SignupComponent {
     this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      cpf: new FormControl('', [Validators.required, Validators.minLength(11)]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
@@ -45,7 +50,7 @@ export class SignupComponent {
 
   submit(){
     this.loginService.login(this.signupForm.value.email, this.signupForm.value.password).subscribe({
-      next: () => this.toastService.success("Login feito com sucesso!"),
+      next: () => this.toastService.success("Cadastro realizado com sucesso!"),
       error: () =>this.toastService.error("Erro inesperado! Tente novamente mais tarde")
     })
   }
